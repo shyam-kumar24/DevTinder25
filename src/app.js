@@ -1,21 +1,21 @@
 const express = require("express");
 const app = express();
 const connectDB = require("./config/database");
-const User = require('./models/user.js')
+const User = require("./models/user.js");
 
+app.use(express.json())
 
-app.post('/signup', async (req,res) => {
-  const user = new User({
-    firstName: 'shyam',
-    lastName: 'kumar',
-    emailId: 'shyam@kumar.com',
-    password: 'shyam@123'
-  })
+app.post("/signup", async (req, res) => {
 
-  await user.save()
-  res.send('user added successfully !')
-})
+  const user = new User(req.body);
 
+  try {
+    await user.save();
+    res.send("user added successfully !");
+  } catch (e) {
+    res.status(400).send("error saving the user", e.message);
+  }
+});
 
 connectDB()
   .then(() => {
@@ -26,8 +26,7 @@ connectDB()
   })
   .catch((err) => {
     console.log("something happened wrong !");
-});
-
+  });
 
 app.get("/getUserData", (req, res) => {
   try {
@@ -37,7 +36,6 @@ app.get("/getUserData", (req, res) => {
     res.status(500).send("some error contact shaym");
   }
 });
-
 
 app.use("/", (err, req, res, next) => {
   if (err) {
