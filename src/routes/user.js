@@ -81,7 +81,7 @@ userRouter.get("/feed", userAuth, async (req, res) => {
     //  $ne : not equal to 
     }).select(USER_SAFE_DATA).skip(skip).limit(limit);
 
-    res.send(connectionRequests);
+    res.send(users);
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
