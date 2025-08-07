@@ -47,10 +47,11 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
       data
     })
 
-
   }catch(e){
     res.status(400).send("Error "+ e.message);
   }
+
+
 });
 
 
